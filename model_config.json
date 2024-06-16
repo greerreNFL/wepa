@@ -1,0 +1,15 @@
+{
+    "version" : 3.0,
+    "features" : [
+        "tos_three_quarters_int",
+        "special_teams_all",
+        "d_plays_all_boosted"
+    ],
+    "combiner" : "multiplicative",
+    "combiner_params" : {},
+    "smoothing" : {
+        "median" : -0.2,
+        "ema" : 0.35,
+        "start" : 10
+    }
+}
