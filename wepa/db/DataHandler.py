@@ -11,6 +11,7 @@ class DataHandler():
     def __init__(self, **kwargs):
         self.pbp = kwargs.get('pbp', None)
         self.games = kwargs.get('games', None)
+        self.exclude_playoffs = kwargs.get('exclude_playoffs', True)
         self.data_folder = self.set_data_folder()
         self.weights = None
         self.wepa_by_game_at = None
@@ -52,9 +53,10 @@ class DataHandler():
             self.pbp = db.get('pbp', self.pbp)
             self.games = db.get('games', self.games)
         ## remove playoff games ##
-        self.games = self.games[
-            self.games['game_type'] == 'REG'
-        ].copy()
+        if self.exclude_playoffs:
+            self.games = self.games[
+                self.games['game_type'] == 'REG'
+            ].copy()
     
     def save_wepa(self):
         '''

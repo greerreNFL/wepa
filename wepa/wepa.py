@@ -5,6 +5,7 @@ import pathlib
 import json
 
 from .engine import WepaEngine
+from .optimizer import MarginNormalization
 from .db import DataHandler
 from .weights import WepaWeights
 
@@ -23,7 +24,8 @@ class WepaRunner():
         ## load data ##
         self.data = DataHandler(
             pbp=kwargs.get('pbp', None),
-            games=kwargs.get('games', None)
+            games=kwargs.get('games', None),
+            exclude_playoffs=False
         )
         ## load and check for updated weights ##
         self.weights = WepaWeights(
@@ -53,6 +55,9 @@ class WepaRunner():
         self.at_engine.apply_wepa()
         self.pit_engine.apply_wepa()
         self.save_wepas()
+        ## update normalization model ##
+        mn = MarginNormalization()
+        mn.update_config()
 
     
     def load_config(self):
@@ -145,6 +150,17 @@ class WepaRunner():
         self.data.wepa_by_season_pit = self.agg_by_season(self.flatten_wepa(
             self.pit_engine.df
         ))
+        ## normalize ##
+        m = self.config['normalization']['m']
+        b = self.config['normalization']['b']
+        for df in [
+            self.data.wepa_by_game_at, self.data.wepa_by_season_at,
+            self.data.wepa_by_game_pit, self.data.wepa_by_season_pit
+        ]:
+            df['wepa_net_normalized'] = (
+                df['wepa_net'] * m +
+                b
+            )
         ## save the data
         self.data.save_wepa()
         
