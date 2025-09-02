@@ -1,2 +1,2 @@
 ,model_version,trained_through,model_rsq,epa_rsq,margin_rsq,rsq_lift,features,combiner,tos_three_quarters_int,special_teams_all,d_plays_all_boosted
-0,3.0,2023,0.28617392790006635,0.2645303010940552,0.26507019996643066,0.08181908354731604,"tos_three_quarters_int, special_teams_all, d_plays_all_boosted",multiplicative,0.3593187177967391,0.15254178441536528,0.5550039450628008
+0,3.0,2024,0.2792857716619722,0.25081580877304077,0.2534148693084717,0.11350944355622117,"tos_three_quarters_int, special_teams_all, d_plays_all_boosted",multiplicative,0.2490973241259221,0.16611871372082315,0.5731417526531536
